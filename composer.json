@@ -1,0 +1,22 @@
+{
+    "name": "ugosansh/component-image",
+    "license": "MIT",
+    "type": "Library",
+    "description": "Image uploader library",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "require": {
+        "php": ">=5.4",
+        "symfony/filesystem" : "~2.6",
+        "symfony/finder"     : "~2.6"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1"
+        }
+    }
+}
