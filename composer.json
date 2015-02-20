@@ -8,8 +8,8 @@
     },
     "require": {
         "php": ">=5.4",
-        "symfony/filesystem" : "~2.6",
-        "symfony/finder"     : "~2.6"
+        "symfony/filesystem" : "~2.5",
+        "symfony/finder"     : "~2.5"
     },
     "config": {
         "bin-dir": "bin"
