@@ -177,20 +177,4 @@ interface ImageInterface
      */
     public function removeMetadata($name);
 
-    /**
-     * Set parent
-     *
-     * @param ImageInterface $image
-     *
-     * @return ImageInterface
-     */
-    public function setParent(ImageInterface $image);
-
-    /**
-     * Get parent
-     *
-     * @return ImageInterface
-     */
-    public function getParent();
-
 }
