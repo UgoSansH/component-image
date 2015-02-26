@@ -5,8 +5,8 @@ namespace Ugosansh\Component\Image\Upload\Adapter;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException as FsIOException;
 use Symfony\Component\Finder\Finder;
-use Ugosansh\Component\Image\Upload\Exception\Exception;
-use Ugosansh\Component\Image\Upload\Exception\IOException;
+use Ugosansh\Component\Image\Exception\Exception;
+use Ugosansh\Component\Image\Exception\IOException;
 use Ugosansh\Component\Image\Upload\UploadAdapterInterface;
 
 /**

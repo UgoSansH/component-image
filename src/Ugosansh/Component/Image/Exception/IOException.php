@@ -1,6 +1,6 @@
 <?php
 
-namespace Ugosansh\Component\Image\Upload\Exception;
+namespace Ugosansh\Component\Image\Exception;
 
 use Symfony\Component\Filesystem\Exception\IOException as BaseException;
 

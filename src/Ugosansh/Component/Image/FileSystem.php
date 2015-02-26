@@ -2,11 +2,20 @@
 
 namespace Ugosansh\Component\Image;
 
+use Symfony\Component\Filesystem\Filesystem as BaseFilesystem;
+use Symfony\Component\Filesystem\Exception\IOException as FsIOException;
+use Ugosansh\Component\Image\Exception\IOException;
+
 /**
  * Filesystem image tools
  */
 class FileSystem
 {
+    /**
+     * @var BaseFilesystem
+     */
+    protected $filesystem;
+
     /**
      * @var string
      */
@@ -17,9 +26,10 @@ class FileSystem
      *
      * @param string $rootDir
      */
-    public function __construct($rootDir)
+    public function __construct(BaseFilesystem $filesystem, $rootDir)
     {
-        $this->rootDir = $rootDir;
+        $this->filesystem = $filesystem;
+        $this->rootDir    = $rootDir;
     }
 
     /**
@@ -55,6 +65,32 @@ class FileSystem
     }
 
     /**
+     * Create directory
+     *
+     * @param string $directory Directory path
+     * @param mixed  $chmod     Default null
+     * @param mixed  $recursive Default false
+     *
+     * @return boolean
+     * @throws Exception\IOException
+     */
+    public function createDirectory($directory, $chmod = null, $recurisve = true)
+    {
+        $chmod     = $chmod ?: 755;
+        $directory = sprintf('%s/%s', $this->rootDir, trim($directory, '/'));
+
+        if (!$this->filesystem->exists($directory)) {
+            try {
+                $this->filesystem->mkdir($directory);
+            } catch (FsIOException $e) {
+                throw new IOException($e->getMessage(), $e->getCode(), $e);
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * definePath
      *
      * @param integer $id
@@ -63,12 +99,13 @@ class FileSystem
      *
      * @return string
      */
-    public function definePath($id, $title, $extension)
+    public function definePath($id, $title, $extension, $prefix = '')
     {
         return sprintf(
-            '%s/%d-%s.%s',
+            '%s/%s-%s%s.%s',
             $this->getCurrentDirectory(),
-            $id,
+            (new \DateTime())->format('His'),
+            $prefix,
             Canonicalizer::slug($title),
             $extension
         );
@@ -81,12 +118,13 @@ class FileSystem
      *
      * @return string
      */
-    public function defineImagePath(ImageInterface $image)
+    public function defineImagePath(ImageInterface $image, $prefix = '')
     {
         return $this->definePath(
             $image->getId(),
             $image->getTitle(),
-            $image->getExtension()
+            $image->getExtension(),
+            $prefix
         );
     }
 
@@ -114,7 +152,7 @@ class FileSystem
         $path = $this->getAbsolutePath($image->getPath());
 
         if (!is_file($path)) {
-            throw Exception\IOException(sprintf('Not found image source "%s"', $image->getId()));
+            throw new IOException(sprintf('Not found image source "%s"', $image->getId()));
         }
 
         return file_get_contents($path);

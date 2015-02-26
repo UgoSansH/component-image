@@ -3,7 +3,7 @@
 namespace Ugosansh\Component\Image\Upload\Adapter;
 
 use Ugosansh\Component\Image\Upload\TempFileAdapterInterface;
-use Ugosansh\Component\Image\Upload\Exception\IOException;
+use Ugosansh\Component\Image\Upload\IOException;
 
 /**
  * Temp file adapter
