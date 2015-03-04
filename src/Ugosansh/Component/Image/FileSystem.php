@@ -99,16 +99,36 @@ class FileSystem
      *
      * @return string
      */
-    public function definePath($id, $title, $extension, $prefix = '')
+    public function definePath($id, $title, $extension, $prefix = '', $suffix = '')
     {
-        return sprintf(
-            '%s/%s-%s%s.%s',
-            $this->getCurrentDirectory(),
-            (new \DateTime())->format('His'),
-            $prefix,
-            Canonicalizer::slug($title),
-            $extension
-        );
+        $path = '';
+
+        if ($suffix) {
+            $path = sprintf(
+                '%s/%s-%s%s-%s.%s',
+                $this->getCurrentDirectory(),
+                (new \DateTime())->format('His'),
+                $prefix,
+                Canonicalizer::slug($title),
+                $suffix,
+                $extension
+            );
+        } else {
+            $path = sprintf(
+                '%s/%s-%s%s.%s',
+                $this->getCurrentDirectory(),
+                (new \DateTime())->format('His'),
+                $prefix,
+                Canonicalizer::slug($title),
+                $extension
+            );
+        }
+
+        if (file_exists(sprintf('%s/%s', $this->rootDir, $path))) {
+            return $this->definePath($id, $title, $extension, $prefix, intval($suffix) + 1);
+        }
+
+        return $path;
     }
 
     /**
