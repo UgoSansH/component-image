@@ -71,7 +71,7 @@ class TempFileAdapter implements TempFileAdapterInterface
 
                 $this->clear();
 
-                throw new IOException(sprintf('Failed to write in temp file "%"', $path));
+                throw new IOException(sprintf('Failed to write in temp file "%s"', $this->path));
             }
 
             fclose($handle);
@@ -79,7 +79,7 @@ class TempFileAdapter implements TempFileAdapterInterface
         } else {
             $this->clear();
 
-            throw new IOException(sprintf('Failed to open temp file "%"', $path));
+            throw new IOException(sprintf('Failed to open temp file "%s"', $this->path));
         }
 
         return $this;
@@ -94,9 +94,7 @@ class TempFileAdapter implements TempFileAdapterInterface
     public function clear()
     {
         if (is_file($this->path)) {
-            if (!unlink($this->path)) {
-                throw new IOException(sprintf('Failed to remove temp file "%"', $path));
-            }
+            unlink($this->path);
         }
 
         $this->path = '';
