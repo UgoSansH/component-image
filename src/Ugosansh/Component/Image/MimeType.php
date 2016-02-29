@@ -10,6 +10,7 @@ class MimeType
     const TYPE_PNG  = 'image/png';
     const TYPE_GIF  = 'image/gif';
     const TYPE_JPEG = 'image/jpg|image/jpeg';
+    const TYPE_SVG  = 'image/svg+xml';
 
     /**
      * @var array
@@ -25,7 +26,8 @@ class MimeType
             'png'  => 'image/png',
             'jpeg' => 'image/jpeg',
             'jpg'  => 'image/jpg',
-            'gif'  => 'image/gif'
+            'gif'  => 'image/gif',
+            'svg'  => 'image/svg+xml'
         ];
     }
 
