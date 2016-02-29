@@ -56,6 +56,11 @@ class FileSystem
         $finfo     = new \finfo(FILEINFO_MIME_TYPE);
 
         $image->setMimeType($finfo->file($path));
+
+        if ($image->getMimeType() == 'text/html') {
+            $image->setMimeType('image/svg+xml');
+        }
+
         $image->setExtension((new MimeType)->extensionToMimeType($image->getMimeType()));
         $image->setWeight(filesize($path));
         $image->setWidth($imageSize[0]);
